@@ -5,7 +5,15 @@ const dynamo = new AWS.DynamoDB.DocumentClient();
 const MY_TABLE = process.env.MY_TABLE
 
 const listQuotes = async () => {
-    return '';
+    const params = {
+        TableName: MY_TABLE
+    };
+    return dynamo
+                .scan(params)
+                .promise()
+                .then((data) => {
+                    return data.Items
+                })
 }
 
 const saveQuote = async (data) => {
